@@ -48,7 +48,8 @@ contract Vault is
         //masterchef = _masterchef;
         //sushi = _sushi;
     }
-    function deposit(address _tokenAddress, uint256 _amount) //**********CHANGER ORDRE*******************
+
+    function deposit(address _tokenAddress, uint256 _amount)
         public
         isWhitelisted(_tokenAddress)
         returns (uint256)
@@ -61,7 +62,15 @@ contract Vault is
         _assetsToSlp(_user);
         _slpToMasterchef();
     }
-    function withdrawAll (address _tokenAddress, address _user) public {        //supprimer tokenAddress
+
+    function depositAave() {
+        
+    }
+
+    function withdrawAave() {
+
+    }
+    function withdrawAll (/*address _tokenAddress, */address _user) public {        //supprimer tokenAddress
         _masterchefToSlp();
         _slpToUser(_user);
         // _slpToVault();
@@ -74,7 +83,7 @@ contract Vault is
     function _swapHalf(
         uint256 _amount, 
         address _tokenAddress, 
-        address _user //**************************Retirer address car SLP reste sur vault
+        address _user                       //**************************Retirer address car SLP reste sur vault
     ) internal {
         uint256 _amountIn = SafeMath.div(_amount, 2);
         (uint112 reserve1, uint112 reserve2, ) = UniswapV2Pair(slp).getReserves();
