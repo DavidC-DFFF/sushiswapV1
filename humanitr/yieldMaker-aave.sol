@@ -18,32 +18,29 @@ contract YieldMaker {
     address USDC = 0xA2025B15a1757311bfD68cb14eaeFCc237AF5b43;
     address aUSDC = 0x1Ee669290939f8a8864497Af3BC83728715265FF;
 
-    constructor(
-        address _vault
-    ) public {
+    function setVault(address _vault) public {
         vault = _vault;
     }
     
     function depositToYield(
-        //address _user, 
         address _asset, 
         uint256 _amount
     ) public {
         Pool(pool).supply(
-            _asset,               //_asset,
+            _asset,
             _amount,
-            vault,                              // vault reçoit les USDC et les stake sur AAVE
-            0                   //_referralCode
+            vault,                  // vault reçoit les USDC et les stake sur AAVE
+            0                       //_referralCode
         );
     }
 
     function withdrawFromYield(
-        address _user, 
+        //address _user, 
         address _asset, 
         uint256 _amount, 
         uint256 _balance
     ) public {
-        uint256 _aTokenAmount = AToken(aUSDC).balanceOf(_user);
+        uint256 _aTokenAmount = AToken(aUSDC).balanceOf(vault);
         uint256 _amountAdjusted = SafeMath.div(SafeMath.mul(_aTokenAmount, _amount), _balance);
         Pool(pool).withdraw(
             _asset,

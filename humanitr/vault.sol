@@ -30,7 +30,7 @@ contract Vault is
     }
 
     // call yieldmaker for deposit to yield
-    function O1_deposit(address _yieldMakerAddress, address _asset, uint256 _amount)
+    function O1_deposit(/*address _yieldMakerAddress, */address _asset, uint256 _amount)
         public
         isWhitelisted(_asset)
     {   
@@ -38,9 +38,9 @@ contract Vault is
         IERC20(_asset).transferFrom(msg.sender, address(this), _amount);
         Balances[msg.sender][_asset] += _amount;
         // ERC20 is on vault;
-        address _user = msg.sender;
-        IERC20(_asset).approve(_yieldMakerAddress, _amount);     
-        YieldMaker(_yieldMakerAddress).depositToYield(
+        // address _user = msg.sender;
+        IERC20(_asset).approve(yieldMaker, _amount);     
+        YieldMaker(yieldMaker).depositToYield(
             //_user,
             _asset, 
             _amount
@@ -48,7 +48,7 @@ contract Vault is
     }
 
     // call yieldmaker for withdraw from yield
-    function O2_withdraw(address _yieldMakerAddress, address _asset, uint256 _amount) 
+    function O2_withdraw(address _asset, uint256 _amount) 
         public
         isWhitelisted(_asset)
     {
@@ -56,9 +56,9 @@ contract Vault is
             _amount <= Balances[msg.sender][_asset],
             "Not enough funds"
         );
-        address _user = address(this);
+        //address _user = address(this);
         uint256 _balance = Balances[msg.sender][_asset];
-        YieldMaker(_yieldMakerAddress).withdrawFromYield(_user, _asset, _amount, _balance);
+        YieldMaker(yieldMaker).withdrawFromYield(/*_user, */_asset, _amount, _balance);
         //transfer
         IERC20(_asset).transfer(msg.sender, _amount);
         Balances[msg.sender][_asset] -= _amount;
