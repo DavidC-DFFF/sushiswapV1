@@ -37,7 +37,12 @@ contract YieldMaker {
         );
     }
 
-    function withdrawFromYield(address _user, address _asset, uint256 _amount, uint256 _balance) public {
+    function withdrawFromYield(
+        address _user, 
+        address _asset, 
+        uint256 _amount, 
+        uint256 _balance
+    ) public {
         uint256 _aTokenAmount = AToken(aUSDC).balanceOf(_user);
         uint256 _amountAdjusted = SafeMath.div(SafeMath.mul(_aTokenAmount, _amount), _balance);
         Pool(pool).withdraw(

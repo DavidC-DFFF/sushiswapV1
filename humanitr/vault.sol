@@ -35,7 +35,7 @@ contract Vault is
         isWhitelisted(_asset)
     {   
         // Approve asset first
-        IERC20(_asset).transferFrom(msg.sender, address(this));
+        IERC20(_asset).transferFrom(msg.sender, address(this), _amount);
         Balances[msg.sender][_asset] += _amount;
         // ERC20 is on vault;
         address _user = msg.sender;
@@ -56,10 +56,12 @@ contract Vault is
             _amount <= Balances[msg.sender][_asset],
             "Not enough funds"
         );
-        address _user = msg.sender;
+        address _user = address(this);
+        uint256 _balance = Balances[msg.sender][_asset];
+        YieldMaker(_yieldMakerAddress).withdrawFromYield(_user, _asset, _amount, _balance);
+        //transfer
         Balances[msg.sender][_asset] -= _amount;
-        YieldMaker(_yieldMakerAddress).withdrawFromYield(_user/*, _asset, _amount*/);
-        // Manuel to test //_sushiToAsso();
+        
     }
     
     function getBalance(address _asset) public view returns (uint256) {
