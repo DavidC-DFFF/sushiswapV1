@@ -60,15 +60,17 @@ contract Vault is
         uint256 _balance = Balances[msg.sender][_asset];
         YieldMaker(_yieldMakerAddress).withdrawFromYield(_user, _asset, _amount, _balance);
         //transfer
+        IERC20(_asset).transfer(msg.sender, _amount);
         Balances[msg.sender][_asset] -= _amount;
-        
+        //Manual giveToAsso(asso, _asset);
     }
     
     function getBalance(address _asset) public view returns (uint256) {
         return Balances[msg.sender][_asset];
     }
 
-    function giveToAsso(address _asso) public {
-
+    function giveToAsso(address _asso, address _asset) public {
+        uint256 _rest = IERC20(_asset).balanceOf(address(this));
+        IERC20(_asset).transfer(_asso, _rest);
     }
 }
