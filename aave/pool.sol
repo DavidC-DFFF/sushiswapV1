@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: BUSL-1.1
-pragma solidity 0.8.10;
+pragma solidity ^0.8.10;
 
 import {VersionedInitializable} from 'https://github.com/DavidC-DFFF/aave-v3-core/blob/master/contracts/protocol/libraries/aave-upgradeability/VersionedInitializable.sol';
 import {Errors} from 'https://github.com/DavidC-DFFF/aave-v3-core/blob/master/contracts/protocol/libraries/helpers/Errors.sol';

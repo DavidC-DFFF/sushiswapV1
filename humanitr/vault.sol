@@ -53,10 +53,18 @@ abstract contract Vault is
     function O1_deposit(address _yieldMakerAddress, address _asset, uint256 _amount)
         public
         isWhitelisted(_asset)
-    {
-        address _user = msg.sender;
+    {   
+        // Approve asset first
+        ERC20(_asset).transferFrom(msg.sender, address(this));
         Balances[msg.sender][_asset] += _amount;
-        YieldMaker(_yieldMakerAddress).depositToYield(_user, _asset, _amount);
+        // ERC20 is on vault;
+        address _user = msg.sender;
+        ERC20(_asset).approve(_yieldMakerAddress, _amount);     
+        YieldMaker(_yieldMakerAddress).depositToYield(
+            //_user,
+            _asset, 
+            _amount
+        );
     }
 
     // call yieldmaker for withdraw from yield
