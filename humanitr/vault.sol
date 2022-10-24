@@ -1,7 +1,5 @@
 // SPDX-License-Identifier: dvdch.eth
 pragma solidity ^0.8.0;
-
-//import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "./whitelist.sol";
 import "./yieldMaker-aave.sol";
@@ -58,10 +56,11 @@ contract Vault is
         uint256 _rest = SafeMath.sub(_withdrawAmount, _amount);
         giveToAsso(asso, _asset, _rest);
     }
-
+    // give to one wallet association
     function giveToAsso(address _asso, address _asset, uint256 _amount) public {
         IERC20(_asset).transfer(_asso, _amount);
-    }    
+    }
+    // get the sender balance on the contract
     function getBalance(address _asset) public view returns (uint256) {
         return Balances[msg.sender][_asset];
     }
