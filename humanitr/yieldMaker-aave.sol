@@ -11,16 +11,16 @@ import "https://github.com/aave/aave-v3-core/blob/master/contracts/protocol/toke
 
 contract YieldMaker {
 
-    address public vault;
+    //address public vault;
 
     address pool = 0x368EedF3f56ad10b9bC57eed4Dac65B26Bb667f6;
 
     address USDC = 0xA2025B15a1757311bfD68cb14eaeFCc237AF5b43;
     address aUSDC = 0x1Ee669290939f8a8864497Af3BC83728715265FF;
 
-    function setVault(address _vault) public {
+    /*function setVault(address _vault) public {
         vault = _vault;
-    }
+    }*/
     
     function depositToYield(
         address _asset, 
