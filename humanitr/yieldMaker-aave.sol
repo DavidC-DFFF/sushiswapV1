@@ -26,6 +26,7 @@ contract YieldMaker {
         address _asset, 
         uint256 _amount
     ) public {
+        //IERC20(_asset).approve(pool, _amount);   //
         Pool(pool).supply(
             _asset,
             _amount,
@@ -37,9 +38,9 @@ contract YieldMaker {
 
     function withdrawFromYield(
         //address _user, 
-        address _asset/*,*/ 
-        //uint256 _amount, 
-        //uint256 _balance
+        address _asset, 
+        uint256 _amount, 
+        uint256 _balance
     ) public {
         uint256 _aTokenAmount = AToken(aUSDC).balanceOf(/*vault*/msg.sender);
         //uint256 _amountAdjusted = SafeMath.div(SafeMath.mul(_aTokenAmount, _amount), _balance);

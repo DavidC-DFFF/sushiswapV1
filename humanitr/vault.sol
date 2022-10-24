@@ -32,21 +32,22 @@ contract Vault is
     }
 
     // call yieldmaker for deposit to yield
-    function O1_deposit(/*address _yieldMakerAddress, */address _asset, uint256 _amount)
+    function O1_deposit(address _asset, uint256 _amount)
         public
         isWhitelisted(_asset)
     {   
         // Approve asset first
         IERC20(_asset).transferFrom(msg.sender, address(this), _amount);
         Balances[msg.sender][_asset] += _amount;
-        // ERC20 is on vault;
-        // address _user = msg.sender;
-        IERC20(_asset).approve(pool, Balances[msg.sender][_asset]);   //
-        //IERC20(_asset).approve(yieldMaker, Balances[msg.sender][_asset]);   //
-        YieldMaker(yieldMaker).depositToYield(                              //
-            //_user,                                                        //
-            _asset,                                                         //
-            _amount                                                         //
+        //IERC20(_asset).approve(pool, Balances[msg.sender][_asset]);
+        //IERC20(_asset).transfer(yieldMaker, _amount);                         // test with transfer
+        
+        //IERC20(_asset).approve(yieldMaker, Balances[msg.sender][_asset]);
+        IERC20(_asset).approve(pool, _amount);
+        YieldMaker(yieldMaker).depositToYield(
+            //_user,
+            _asset,
+            _amount
         );
     }
 
