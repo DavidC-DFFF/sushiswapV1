@@ -2,12 +2,12 @@
 //pragma solidity ^0.6.0;
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+//import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
-import "../aave/pool.sol";
-import "../aave/aToken.sol";
+import "https://github.com/aave/aave-v3-core/blob/master/contracts/protocol/pool/Pool.sol";
+import "https://github.com/aave/aave-v3-core/blob/master/contracts/protocol/tokenization/AToken.sol";
 
 contract YieldMaker {
 
@@ -39,7 +39,7 @@ contract YieldMaker {
 
     function withdrawFromYield(address _user, address _asset, uint256 _amount, uint256 _balance) public {
         uint256 _aTokenAmount = AToken(aUSDC).balanceOf(_user);
-        uint256 _amountAdjusted = (_amount.mul(_aTokenAmount)).div(_balance);
+        uint256 _amountAdjusted = SafeMath.div(SafeMath.mul(_aTokenAmount, _amount), _balance);
         Pool(pool).withdraw(
             _asset,
             _amountAdjusted,
