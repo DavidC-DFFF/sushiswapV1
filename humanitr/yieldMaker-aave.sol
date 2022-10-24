@@ -23,27 +23,24 @@ contract YieldMaker {
         address _asset, 
         uint256 _amount
     ) public {
-        //IERC20(_asset).approve(pool, _amount);   //
+        IERC20(_asset).approve(pool, _amount);
         Pool(pool).supply(
             _asset,
             _amount,
-            msg.sender,             // pour test
-            //vault,                // vault reçoit les USDC et les stake sur AAVE
-            0                       //_referralCode
+            msg.sender,
+            0
         );
     }
 
     function withdrawFromYield(
-        //address _user, 
         address _asset, 
-        uint256 _amount, 
-        uint256 _balance
+        uint256 _amount
     ) public {
-        uint256 _aTokenAmount = AToken(aUSDC).balanceOf(/*vault*/msg.sender);
+        //uint256 _aTokenAmount = AToken(aUSDC).balanceOf(msg.sender);
         //uint256 _amountAdjusted = SafeMath.div(SafeMath.mul(_aTokenAmount, _amount), _balance);
         Pool(pool).withdraw(
             _asset,
-            _aTokenAmount,     //_amountAdjusted,
+            _amount,                //_amountAdjusted,
             msg.sender              // pour test
             //vault                 // vault reçoit les USDC et les stake sur AAVE
         );
