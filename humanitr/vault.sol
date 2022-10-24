@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: dvdch.eth
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/access/Ownable.sol";
+//import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "./whitelist.sol";
 import "./yieldMaker-aave.sol";
@@ -25,14 +25,8 @@ contract Vault is
     address public assolist;
     address public yieldMaker;
     
-    function setYieldMaker(address _yieldMaker) public {
+    function setYieldMaker(address _yieldMaker) public onlyOwner {
         yieldMaker = _yieldMaker;
-    }
-
-    //change la liste de asso et de yieldmaker
-    function changeAdresses(address _yieldMaker, address _assolist) public onlyOwner {
-        if(_yieldMaker == address(0)) { yieldMaker = _yieldMaker;}
-        if(_assolist == address(0)) { assolist = _assolist;}
     }
 
     // call yieldmaker for deposit to yield

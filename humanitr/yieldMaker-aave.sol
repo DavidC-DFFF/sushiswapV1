@@ -2,7 +2,7 @@
 //pragma solidity ^0.6.0;
 pragma solidity ^0.8.0;
 
-//import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+//import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
@@ -30,7 +30,7 @@ contract YieldMaker {
         uint256 _amount
     ) public {
         Pool(pool).supply(
-            USDC,               //_asset,
+            _asset,               //_asset,
             _amount,
             vault,                              // vault reçoit les USDC et les stake sur AAVE
             0                   //_referralCode
