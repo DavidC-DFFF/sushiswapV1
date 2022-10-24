@@ -1,23 +1,23 @@
 // SPDX-License-Identifier: BUSL-1.1
 pragma solidity ^0.8.10;
 
-import {VersionedInitializable} from 'https://github.com/DavidC-DFFF/aave-v3-core/blob/master/contracts/protocol/libraries/aave-upgradeability/VersionedInitializable.sol';
-import {Errors} from 'https://github.com/DavidC-DFFF/aave-v3-core/blob/master/contracts/protocol/libraries/helpers/Errors.sol';
-import {ReserveConfiguration} from 'https://github.com/DavidC-DFFF/aave-v3-core/blob/master/contracts/protocol/libraries/configuration/ReserveConfiguration.sol';
-import {PoolLogic} from 'https://github.com/DavidC-DFFF/aave-v3-core/blob/master/contracts/protocol/libraries/logic/PoolLogic.sol';
-import {ReserveLogic} from 'https://github.com/DavidC-DFFF/aave-v3-core/blob/master/contracts/protocol/libraries/logic/ReserveLogic.sol';
-import {EModeLogic} from 'https://github.com/DavidC-DFFF/aave-v3-core/blob/master/contracts/protocol/libraries/logic/EModeLogic.sol';
-import {SupplyLogic} from 'https://github.com/DavidC-DFFF/aave-v3-core/blob/master/contracts/protocol/libraries/logic/SupplyLogic.sol';
-import {FlashLoanLogic} from 'https://github.com/DavidC-DFFF/aave-v3-core/blob/master/contracts/protocol/libraries/logic/FlashLoanLogic.sol';
-import {BorrowLogic} from 'https://github.com/DavidC-DFFF/aave-v3-core/blob/master/contracts/protocol/libraries/logic/BorrowLogic.sol';
-import {LiquidationLogic} from 'https://github.com/DavidC-DFFF/aave-v3-core/blob/master/contracts/protocol/libraries/logic/LiquidationLogic.sol';
-import {DataTypes} from 'https://github.com/DavidC-DFFF/aave-v3-core/blob/master/contracts/protocol/libraries/types/DataTypes.sol';
-import {BridgeLogic} from 'https://github.com/DavidC-DFFF/aave-v3-core/blob/master/contracts/protocol/libraries/logic/BridgeLogic.sol';
-import {IERC20WithPermit} from 'https://github.com/DavidC-DFFF/aave-v3-core/blob/master/contracts/interfaces/IERC20WithPermit.sol';
-import {IPoolAddressesProvider} from 'https://github.com/DavidC-DFFF/aave-v3-core/blob/master/contracts/interfaces/IPoolAddressesProvider.sol';
-import {IPool} from 'https://github.com/DavidC-DFFF/aave-v3-core/blob/master/contracts/interfaces/IPool.sol';
-import {IACLManager} from 'https://github.com/DavidC-DFFF/aave-v3-core/blob/master/contracts/interfaces/IACLManager.sol';
-import {PoolStorage} from 'https://github.com/DavidC-DFFF/aave-v3-core/blob/master/contracts/protocol/pool/PoolStorage.sol';
+import {VersionedInitializable} from 'https://github.com/aave/aave-v3-core/blob/master/contracts/protocol/libraries/aave-upgradeability/VersionedInitializable.sol';
+import {Errors} from 'https://github.com/aave/aave-v3-core/blob/master/contracts/protocol/libraries/helpers/Errors.sol';
+import {ReserveConfiguration} from 'https://github.com/aave/aave-v3-core/blob/master/contracts/protocol/libraries/configuration/ReserveConfiguration.sol';
+import {PoolLogic} from 'https://github.com/aave/aave-v3-core/blob/master/contracts/protocol/libraries/logic/PoolLogic.sol';
+import {ReserveLogic} from 'https://github.com/aave/aave-v3-core/blob/master/contracts/protocol/libraries/logic/ReserveLogic.sol';
+import {EModeLogic} from 'https://github.com/aave/aave-v3-core/blob/master/contracts/protocol/libraries/logic/EModeLogic.sol';
+import {SupplyLogic} from 'https://github.com/aave/aave-v3-core/blob/master/contracts/protocol/libraries/logic/SupplyLogic.sol';
+import {FlashLoanLogic} from 'https://github.com/aave/aave-v3-core/blob/master/contracts/protocol/libraries/logic/FlashLoanLogic.sol';
+import {BorrowLogic} from 'https://github.com/aave/aave-v3-core/blob/master/contracts/protocol/libraries/logic/BorrowLogic.sol';
+import {LiquidationLogic} from 'https://github.com/aave/aave-v3-core/blob/master/contracts/protocol/libraries/logic/LiquidationLogic.sol';
+import {DataTypes} from 'https://github.com/aave/aave-v3-core/blob/master/contracts/protocol/libraries/types/DataTypes.sol';
+import {BridgeLogic} from 'https://github.com/aave/aave-v3-core/blob/master/contracts/protocol/libraries/logic/BridgeLogic.sol';
+import {IERC20WithPermit} from 'https://github.com/aave/aave-v3-core/blob/master/contracts/interfaces/IERC20WithPermit.sol';
+import {IPoolAddressesProvider} from 'https://github.com/aave/aave-v3-core/blob/master/contracts/interfaces/IPoolAddressesProvider.sol';
+import {IPool} from 'https://github.com/aave/aave-v3-core/blob/master/contracts/interfaces/IPool.sol';
+import {IACLManager} from 'https://github.com/aave/aave-v3-core/blob/master/contracts/interfaces/IACLManager.sol';
+import {PoolStorage} from 'https://github.com/aave/aave-v3-core/blob/master/contracts/protocol/pool/PoolStorage.sol';
 
 /**
  * @title Pool contract

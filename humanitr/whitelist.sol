@@ -8,7 +8,7 @@ contract Whitelist is Ownable {
    address[] public list;
 
    constructor() public {
-      list.push(0x150d9A8b8b5DCf72CFabE303DAD915BD72B31D00);
+      list.push(0xA2025B15a1757311bfD68cb14eaeFCc237AF5b43);      //USDC Aave Goerli
    }
 
    function newToken(address _newToken) external onlyOwner {

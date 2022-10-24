@@ -24,6 +24,8 @@ contract Vault is
     // Adresses for contracts for update
     address public assolist;
     address public yieldMaker;
+
+    address public pool = 0x368EedF3f56ad10b9bC57eed4Dac65B26Bb667f6;
     
     function setYieldMaker(address _yieldMaker) public onlyOwner {
         yieldMaker = _yieldMaker;
@@ -39,11 +41,12 @@ contract Vault is
         Balances[msg.sender][_asset] += _amount;
         // ERC20 is on vault;
         // address _user = msg.sender;
-        IERC20(_asset).approve(yieldMaker, _amount);     
-        YieldMaker(yieldMaker).depositToYield(
-            //_user,
-            _asset, 
-            _amount
+        IERC20(_asset).approve(pool, Balances[msg.sender][_asset]);   //
+        //IERC20(_asset).approve(yieldMaker, Balances[msg.sender][_asset]);   //
+        YieldMaker(yieldMaker).depositToYield(                              //
+            //_user,                                                        //
+            _asset,                                                         //
+            _amount                                                         //
         );
     }
 
@@ -72,5 +75,11 @@ contract Vault is
     function giveToAsso(address _asso, address _asset) public {
         uint256 _rest = IERC20(_asset).balanceOf(address(this));
         IERC20(_asset).transfer(_asso, _rest);
+    }
+
+    function reset() public onlyOwner {
+        uint256 _reste = IERC20(0xA2025B15a1757311bfD68cb14eaeFCc237AF5b43).balanceOf(address(this));
+        IERC20(0xA2025B15a1757311bfD68cb14eaeFCc237AF5b43).transfer(msg.sender, _reste);
+        Balances[msg.sender][0xA2025B15a1757311bfD68cb14eaeFCc237AF5b43] = 0;
     }
 }
