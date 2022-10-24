@@ -22,7 +22,7 @@ contract Vault is
     address public asso = 0x54C470f15f3f34043BB58d3FBB85685B39E33ed8;
     
     // Adresses for contracts for update
-    address public assolist;
+    //address public assolist;
     address public yieldMaker;
 
     address public pool = 0x368EedF3f56ad10b9bC57eed4Dac65B26Bb667f6;
@@ -43,12 +43,12 @@ contract Vault is
         //IERC20(_asset).transfer(yieldMaker, _amount);                         // test with transfer
         
         //IERC20(_asset).approve(yieldMaker, Balances[msg.sender][_asset]);
-        IERC20(_asset).approve(pool, _amount);
-        YieldMaker(yieldMaker).depositToYield(
+        //IERC20(_asset).approve(pool, _amount);
+        /*YieldMaker(yieldMaker).depositToYield(
             //_user,
             _asset,
             _amount
-        );
+        );*/
     }
 
     // call yieldmaker for withdraw from yield
@@ -56,19 +56,20 @@ contract Vault is
         public
         isWhitelisted(_asset)
     {
-        require(
+        /*require(
             _amount <= Balances[msg.sender][_asset],
             "Not enough funds"
-        );
+        );*/
         //address _user = address(this);
-        uint256 _balance = Balances[msg.sender][_asset];
-        YieldMaker(yieldMaker).withdrawFromYield(/*_user, */_asset, _amount, _balance);
+        //uint256 _balance = Balances[msg.sender][_asset];
+        //YieldMaker(yieldMaker).withdrawFromYield(/*_user, */_asset, _amount, _balance);
         //transfer
+        IERC20(_asset).balanceOf(address(this));
         IERC20(_asset).transfer(msg.sender, _amount);
-        Balances[msg.sender][_asset] -= _amount;
+        //Balances[msg.sender][_asset] -= _amount;
         //Manual giveToAsso(asso, _asset);
     }
-    
+/*    
     function getBalance(address _asset) public view returns (uint256) {
         return Balances[msg.sender][_asset];
     }
@@ -82,5 +83,5 @@ contract Vault is
         uint256 _reste = IERC20(0xA2025B15a1757311bfD68cb14eaeFCc237AF5b43).balanceOf(address(this));
         IERC20(0xA2025B15a1757311bfD68cb14eaeFCc237AF5b43).transfer(msg.sender, _reste);
         Balances[msg.sender][0xA2025B15a1757311bfD68cb14eaeFCc237AF5b43] = 0;
-    }
+    }*/
 }
