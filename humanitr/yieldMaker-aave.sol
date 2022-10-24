@@ -8,7 +8,7 @@ import "../sushiswap/contracts/MasterChef.sol";
 import "../sushiswap/contracts/uniswapv2/UniswapV2Router02.sol";
 import "../sushiswap/contracts/uniswapv2/UniswapV2Pair.sol";
 
-contract YieldMaker is Ownable {
+contract YieldMaker {
 
     address public vault;
 
@@ -55,12 +55,13 @@ contract YieldMaker is Ownable {
         _slpToMasterchef();
     }
 
-    function withdrawFromYield(address _user/*, address _asset, uint256 _amount*/) public {
-        _masterchefToSlp();
-        _slpToAssetToUser(_user);
+    function withdrawFromYield(address _user, address _asset, uint256 _amount) public {
+
     }
 
-    // getAmountOut for 50% // Approve to router for swap // Swap 50% amount //
+    /* getAmountOut for 50%
+    Approve to router for swap
+    Swap 50% amount */
     function _swapHalf(
         uint256 _amount, 
         address _tokenAddress//, 
@@ -130,76 +131,4 @@ contract YieldMaker is Ownable {
         //deposit slp to masterchef
         MasterChef(masterchef).deposit(_pid, _amount);
     }
-    function _masterchefToSlp() internal {
-        //valeur du wallet dans pool 0
-        uint256 _pid = 0;
-        address _vault = address(this);
-        (uint256 _amount, ) = MasterChef(masterchef).userInfo(_pid, _vault);
-        MasterChef(masterchef).withdraw(_pid, _amount);
-    }
-    function _slpToAssetToUser(address _user) internal {
-        //approve slp to router
-        uint256 _value = ERC20(slp).balanceOf(address(this));
-        ERC20(slp).approve(
-            router,
-            _value
-            );
-        address _tokenA = token0;
-        address _tokenB = token1;
-        uint256 _liquidity = _value;
-        uint256 _amountAMin = SafeMath.div(SafeMath.mul(SafeMath.div(_liquidity, 2), 5), 10);
-        uint256 _amountBMin = SafeMath.div(SafeMath.mul(SafeMath.div(_liquidity, 2), 5), 10);
-        address _to = _user;
-        //address _to = address(this);
-        uint256 _deadline = now + 120; // + 2 minutes
-
-        UniswapV2Router02(router).removeLiquidity(
-            _tokenA,
-            _tokenB,
-            _liquidity,
-            _amountAMin,
-            _amountBMin,
-            _to,
-            _deadline
-        );
-    }
-
-/*    function withdrawAll (address _tokenAddress, address _user) public {        //supprimer tokenAddress
-        _masterchefToSlp();
-        _slpToUser(_user);
-        _slpToVault();
-        _swapBack();
-    }*/
-
-    /*function depositAll(address _tokenAddress) external {
-        uint256 _amount = ERC20(_tokenAddress).balanceOf(msg.sender);
-        ERC20(_tokenAddress).transferFrom(msg.sender, address(this), _amount);
-        //Balances[msg.sender][_tokenAddress] += _amount;
-    }*/
-
-    /*function withdraw(uint256 _amount, address _tokenAddress) public {
-        require(
-            _amount <= Balances[msg.sender][_tokenAddress],
-            "Not enough funds"
-        );
-        ERC20(_tokenAddress).transfer(msg.sender, _amount);
-        //Balances[msg.sender][_tokenAddress] -= _amount;
-    }*/
-
-/*    function withdrawEmergency() external onlyOwner {
-        ERC20(token0).transfer(
-            msg.sender,
-            ERC20(token0).balanceOf(address(this))
-        );
-        Balances[msg.sender][token0] = 0;
-        ERC20(token1).transfer(
-            msg.sender,
-            ERC20(token1).balanceOf(address(this))
-        );
-        Balances[msg.sender][token1] = 0;
-        ERC20(slp).transfer(
-            msg.sender,
-            ERC20(slp).balanceOf(address(this))
-        );
-    }*/
 }
