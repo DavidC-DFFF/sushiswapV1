@@ -15,6 +15,13 @@ contract Vault is
     address public asso = 0x54C470f15f3f34043BB58d3FBB85685B39E33ed8;
     address public yieldMaker;
     address public pool = 0x368EedF3f56ad10b9bC57eed4Dac65B26Bb667f6;
+
+    constructor (
+        address _yieldMaker
+    ) public {
+        yieldMaker = _yieldMaker;
+    }
+
     // set yieldMaker address for evo
     function setYieldMaker(address _yieldMaker) public onlyOwner {
         yieldMaker = _yieldMaker;
@@ -53,7 +60,8 @@ contract Vault is
         IERC20(_asset).transfer(msg.sender, _amount);
         Balances[msg.sender][_asset] -= _amount;
         totalAmount -= _amount;
-        uint256 _rest = SafeMath.sub(_withdrawAmount, _amount);
+        uint256 _rest = IERC20(_asset).balanceOf(address(this));
+        //uint256 _rest = SafeMath.sub(_withdrawAmount, _amount);
         giveToAsso(asso, _asset, _rest);
     }
     // give to one wallet association

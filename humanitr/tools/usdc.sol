@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: dvdch.eth
 pragma solidity ^0.8.4;
 
+// Address Goerli
 // 0xA2025B15a1757311bfD68cb14eaeFCc237AF5b43
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: dvdch.eth
 pragma solidity ^0.8.0;
 
+// Goerli
 // 0x7EDA38f11604bcF3419bA49663d31cabA32A7100
 
 import "@openzeppelin/contracts/access/Ownable.sol";
