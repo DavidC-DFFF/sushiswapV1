@@ -9,10 +9,16 @@ import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "https://github.com/aave/aave-v3-core/blob/master/contracts/protocol/pool/Pool.sol";
 import "https://github.com/aave/aave-v3-core/blob/master/contracts/protocol/tokenization/AToken.sol";
 
-contract YieldMaker {
-    address pool = 0x368EedF3f56ad10b9bC57eed4Dac65B26Bb667f6;
-    address USDC = 0xA2025B15a1757311bfD68cb14eaeFCc237AF5b43;
-    address aUSDC = 0x1Ee669290939f8a8864497Af3BC83728715265FF;
+contract YieldMaker is Ownable {
+    address public pool = 0x368EedF3f56ad10b9bC57eed4Dac65B26Bb667f6;
+    address public USDC = 0xA2025B15a1757311bfD68cb14eaeFCc237AF5b43;
+    address public aUSDC = 0x1Ee669290939f8a8864497Af3BC83728715265FF;
+// update AAVE addresses
+    function changeAaveAddresses(address _pool, address _aUSDC, address _USDC) public onlyOwner {
+        pool = _pool;
+        aUSDC = _aUSDC;
+        USDC = _USDC;
+    }
 // deposit function to AAVE
     function depositToYield(
         address _asset, 
