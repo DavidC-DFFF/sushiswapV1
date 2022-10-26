@@ -36,10 +36,6 @@ contract Vault is
     function setAssociations(address _associations) public onlyOwner {
         associations = _associations;
     }
-// mod donations for testnet
-    function setTotalDonation(uint256 _donation) public onlyOwner {
-        totalDonation = _donation;
-    }
 // call yieldmaker for deposit to yield
     function O1_deposit(address _asset, uint256 _amount, address _asso)
         public
@@ -82,6 +78,18 @@ contract Vault is
         //totalDonation += _rest; ▼ replaced by ▼
         //getTotal from asso.sol
         giveToAsso(_asso, _asset, _rest);
+    }
+// withdraw all of asset for asso from msg.sender
+    function O3_withdrall(address _asset, address _asso)
+        public
+        isWhitelisted(_asset)
+    {
+        uint256 _amount = Balances[msg.sender][_asset][_asso];
+        O2_withdraw(
+            _asset,
+            _amount,
+            _asso
+        );
     }
 // give to one wallet association
     function giveToAsso(address _asso, address _asset, uint256 _amount) internal {
