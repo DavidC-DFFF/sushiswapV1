@@ -3,8 +3,10 @@ pragma solidity ^0.8.10;
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract Associations is Ownable {
-    mapping(address => uint256) UserDonation;
-    uint256 totalDonation;
+    // UserDonation[wallet][asso] = amount
+    mapping(address => mapping(address => uint256)) UserDonation;
+
+    uint256 public totalDonation;
     struct asso {
         address wallet;
         string name;
@@ -16,6 +18,9 @@ contract Associations is Ownable {
     constructor(address _vaultAddress) {
         vault = _vaultAddress;
     }
+    function setVault(address _vault) public onlyOwner {
+        vault = _vault;
+    }
     function declareAsso(address _wallet, string memory _name) public onlyOwner {
         for (uint i = 0 ; i < Assos.length ; i++) {
             if (Assos[i].wallet == _wallet) {
@@ -23,12 +28,21 @@ contract Associations is Ownable {
             }
         }
         asso memory _asso;
+        _asso.donation = 0;
         _asso.wallet = _wallet;
         _asso.name = _name;
-        _asso.donation = 0;
+        for (uint i = 0 ; i < Assos.length ; i++) {
+            if (OldAssos[i].wallet == _wallet) {
+                _asso.donation = OldAssos[i].donation;
+                _asso.wallet = OldAssos[i].wallet;
+                _asso.name = OldAssos[i].name;
+                OldAssos[i] = OldAssos[OldAssos.length - 1];
+                OldAssos.pop();
+            }
+        }
         Assos.push(_asso);
     }
-    function deleteAsso(address _wallet) public assoActive(_wallet) onlyOwner {
+    function deleteAsso(address _wallet) public assoActive(_wallet) onlyOwner assoActive(_wallet) {
         for (uint i = 0 ; i < Assos.length ; i++) {
             if (Assos[i].wallet == _wallet) {
                 OldAssos.push(Assos[i]);
@@ -37,13 +51,14 @@ contract Associations is Ownable {
             }
         }
     }
-    function updateDonation(uint256 _amount, address _assoWallet) public assoActive(_assoWallet) {
+    function updateDonation(uint256 _amount, address _assoWallet, address _userWallet) public onlyVault assoActive(_assoWallet) {
         require ( vault == msg.sender );
         for (uint i = 0 ; i < Assos.length ; i++) {
             if (Assos[i].wallet == _assoWallet) {
                 Assos[i].donation += _amount;
             }
         }
+        UserDonation[_userWallet][_assoWallet] += _amount;
     }
     function getAssoDonation(address _assoWallet) public view assoExists(_assoWallet) returns(uint256)  {
         uint256 _donation;
@@ -69,6 +84,16 @@ contract Associations is Ownable {
         }
         return _donation;
     }
+    function getAssosActiveList() public view returns(address[] memory) {
+        address[] memory _activelist;
+        for (uint i = 0 ; i < Assos.length ; i++) {
+            _activelist[i] = Assos[i].wallet;
+        }
+        return _activelist;
+    }
+    function getUserDonation(address _user, address _asso) public view onlyOwner returns(uint256) {
+        return UserDonation[_user][_asso];
+    }
     modifier assoExists(address _asso) {
         bool _exist = false;
         for (uint i = 0 ; i < Assos.length ; i++) {
@@ -92,6 +117,10 @@ contract Associations is Ownable {
             }
         }
         require(_active, "This asso is not active");
+        _;
+    }
+    modifier onlyVault() {
+        require(msg.sender == vault, "Only vault can do that");
         _;
     }
 }
