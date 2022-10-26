@@ -75,7 +75,4 @@ contract Vault is
     function getBalanceToken(address _asset) public view returns (uint256) {
         return Balances[msg.sender][_asset];
     }
-    /*function getBalanceAAVEtoken() public view returns (uint256) {
-        return IERC20(aUSDC).balanceOf(address(this));
-    }*/
 }
