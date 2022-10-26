@@ -5,8 +5,6 @@ import "./whitelist.sol";
 import "./yieldMaker-aave.sol";
 import "./associations.sol";
 
-// Goerli : 0xf42ff7CeFf9b35a461173bcb0840Ee86D96761a4
-
 contract Vault is
     Ownable,
     Whitelist

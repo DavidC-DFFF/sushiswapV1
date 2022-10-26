@@ -3,12 +3,12 @@ pragma solidity ^0.8.10;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-// Goerli : 0x54449F78d09366554892Ad014fd1dE7eb950697E
+// Goerli : 0x44C1fA10E05Bc50E1a8EeCc74A386329Cb73e752
 
 contract Associations is Ownable {
     // UserDonation[wallet][asso] = amount
     mapping(address => mapping(address => uint256)) public UserDonation;
-    
+
     struct asso {
         address wallet;
         string name;
