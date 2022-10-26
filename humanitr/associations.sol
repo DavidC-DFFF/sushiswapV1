@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: dvdch.eth
 pragma solidity ^0.8.10;
+
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract Associations is Ownable {
@@ -14,6 +15,7 @@ contract Associations is Ownable {
     }
     asso[] public Assos;
     asso[] public OldAssos;
+    address[] public asset;
     address public vault;
     constructor(address _vaultAddress) {
         vault = _vaultAddress;
