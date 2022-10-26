@@ -9,26 +9,38 @@ contract Vault is
     Ownable,
     Whitelist
 {
+// adresses declarations
     address aUSDC = 0x1Ee669290939f8a8864497Af3BC83728715265FF;
     mapping(address => mapping(address => uint256)) Balances;
     uint256 totalAmount;
     address public asso = 0x54C470f15f3f34043BB58d3FBB85685B39E33ed8;
     address yieldMaker;
+    address associations;
     address pool = 0x368EedF3f56ad10b9bC57eed4Dac65B26Bb667f6;
 
     uint256 public totalDonation;
 // set yieldMaker
-    constructor (address _yieldMaker) {
+    constructor (address _yieldMaker, address _associations) {
         yieldMaker = _yieldMaker;
+        associations = _associations;
     }
 // set yieldMaker address for evo
     function setYieldMaker(address _yieldMaker) public onlyOwner {
         yieldMaker = _yieldMaker;
     }
+// set associations address for evo
+    function setAssociations(address _associations) public onlyOwner {
+        associations = _associations;
+    }
 // mod donations for testnet
     function setTotalDonation(uint256 _donation) public onlyOwner {
         totalDonation = _donation;
     }
+// getTotalDonation
+    function getTotalDonation() public view returns(uint256) {
+        
+    }
+
 // call yieldmaker for deposit to yield
     function O1_deposit(address _asset, uint256 _amount)
         public

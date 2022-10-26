@@ -4,7 +4,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract Associations is Ownable {
     // UserDonation[wallet][asso] = amount
-    mapping(address => mapping(address => uint256)) UserDonation;
+    mapping(address => mapping(address => uint256)) public UserDonation;
 
     uint256 public totalDonation;
     struct asso {
@@ -17,6 +17,11 @@ contract Associations is Ownable {
     address public vault;
     constructor(address _vaultAddress) {
         vault = _vaultAddress;
+        asso memory _asso;
+        _asso.donation = 0;
+        _asso.wallet = msg.sender;
+        _asso.name = "Owner";
+        Assos.push(_asso);
     }
     function setVault(address _vault) public onlyOwner {
         vault = _vault;
@@ -31,7 +36,7 @@ contract Associations is Ownable {
         _asso.donation = 0;
         _asso.wallet = _wallet;
         _asso.name = _name;
-        for (uint i = 0 ; i < Assos.length ; i++) {
+        for (uint i = 0 ; i < OldAssos.length ; i++) {
             if (OldAssos[i].wallet == _wallet) {
                 _asso.donation = OldAssos[i].donation;
                 _asso.wallet = OldAssos[i].wallet;
@@ -84,15 +89,18 @@ contract Associations is Ownable {
         }
         return _donation;
     }
-    function getAssosActiveList() public view returns(address[] memory) {
-        address[] memory _activelist;
-        for (uint i = 0 ; i < Assos.length ; i++) {
-            _activelist[i] = Assos[i].wallet;
-        }
-        return _activelist;
-    }
     function getUserDonation(address _user, address _asso) public view onlyOwner returns(uint256) {
         return UserDonation[_user][_asso];
+    }
+    function getUserFullDonation(address _user) public view returns(uint256) {
+        uint256 _amount;
+        for (uint256 i = 0 ; i < Assos.length ; i++ ) {
+            _amount += UserDonation[_user][Assos[i].wallet];
+        }
+        for (uint256 i = 0 ; i < OldAssos.length ; i++ ) {
+            _amount += UserDonation[_user][OldAssos[i].wallet];
+        }
+        return _amount;
     }
     modifier assoExists(address _asso) {
         bool _exist = false;
