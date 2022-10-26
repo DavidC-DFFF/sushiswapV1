@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract Whitelist is Ownable {
    address[] public list;
 
-   constructor() public {
+   constructor() {
       list.push(0xA2025B15a1757311bfD68cb14eaeFCc237AF5b43);      //USDC Aave Goerli
    }
 
