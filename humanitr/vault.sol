@@ -38,11 +38,6 @@ contract Vault is
     function setTotalDonation(uint256 _donation) public onlyOwner {
         totalDonation = _donation;
     }
-// getTotalDonation
-    function getTotalDonation() public view returns(uint256) {
-        
-    }
-
 // call yieldmaker for deposit to yield
     function O1_deposit(address _asset, uint256 _amount, address _asso)
         public
