@@ -3,11 +3,12 @@ pragma solidity ^0.8.10;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 
+// Goerli : 0x54449F78d09366554892Ad014fd1dE7eb950697E
+
 contract Associations is Ownable {
     // UserDonation[wallet][asso] = amount
     mapping(address => mapping(address => uint256)) public UserDonation;
-
-    uint256 public totalDonation;
+    
     struct asso {
         address wallet;
         string name;
@@ -103,6 +104,9 @@ contract Associations is Ownable {
             _amount += UserDonation[_user][OldAssos[i].wallet];
         }
         return _amount;
+    }
+    function resetUserTest(address _user, address _asso) public onlyOwner {
+        UserDonation[_user][_asso] = 0;
     }
     modifier assoExists(address _asso) {
         bool _exist = false;

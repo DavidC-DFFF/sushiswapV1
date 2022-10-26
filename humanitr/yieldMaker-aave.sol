@@ -9,6 +9,8 @@ import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "https://github.com/aave/aave-v3-core/blob/master/contracts/protocol/pool/Pool.sol";
 import "https://github.com/aave/aave-v3-core/blob/master/contracts/protocol/tokenization/AToken.sol";
 
+// Goerli address : 0xF57C4cc042ae0E1A9A134899d1151Cb6C8C0342A
+
 contract YieldMaker is Ownable {
     address public pool = 0x368EedF3f56ad10b9bC57eed4Dac65B26Bb667f6;
     address public USDC = 0xA2025B15a1757311bfD68cb14eaeFCc237AF5b43;

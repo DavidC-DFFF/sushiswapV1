@@ -5,6 +5,8 @@ import "./whitelist.sol";
 import "./yieldMaker-aave.sol";
 import "./associations.sol";
 
+// Goerli : 0xf42ff7CeFf9b35a461173bcb0840Ee86D96761a4
+
 contract Vault is
     Ownable,
     Whitelist
@@ -44,7 +46,7 @@ contract Vault is
         isWhitelisted(_asset)
     {
         IERC20(_asset).transferFrom(msg.sender, address(this), _amount);
-        Associations(associations).updateDonation(_amount, _asso, msg.sender);
+        //Associations(associations).updateDonation(_amount, _asso, msg.sender);
         Balances[msg.sender][_asset][_asso] += _amount;                         /////
         totalAmount += _amount;                                                 /////
         IERC20(_asset).transfer(yieldMaker, _amount);
