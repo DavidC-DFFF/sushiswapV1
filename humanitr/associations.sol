@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: dvdch.eth
-pragma solidity ^0.8.0;
-
+pragma solidity ^0.8.10;
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract Associations is Ownable {
@@ -14,7 +13,6 @@ contract Associations is Ownable {
     asso[] public Assos;
     asso[] public OldAssos;
     address public vault;
-
     constructor(address _vaultAddress) {
         vault = _vaultAddress;
     }
@@ -30,7 +28,7 @@ contract Associations is Ownable {
         _asso.donation = 0;
         Assos.push(_asso);
     }
-    function deleteAsso(address _wallet) public onlyOwner {
+    function deleteAsso(address _wallet) public assoActive(_wallet) onlyOwner {
         for (uint i = 0 ; i < Assos.length ; i++) {
             if (Assos[i].wallet == _wallet) {
                 OldAssos.push(Assos[i]);
@@ -52,6 +50,11 @@ contract Associations is Ownable {
         for (uint i = 0 ; i < Assos.length ; i++) {
             if (Assos[i].wallet == _assoWallet) {
                 _donation = Assos[i].donation;
+            }
+        }
+        for (uint i = 0 ; i < OldAssos.length ; i++) {
+            if (OldAssos[i].wallet == _assoWallet) {
+                _donation = OldAssos[i].donation;
             }
         }
         return _donation;
