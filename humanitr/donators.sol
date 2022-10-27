@@ -7,6 +7,7 @@ contract Donators is Ownable {
 
    address public vault;
    address[] public donators;
+   
 
    constructor (address _vault) {
       vault = _vault;
