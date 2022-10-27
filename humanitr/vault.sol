@@ -14,7 +14,7 @@ contract Vault is
     // Balances[ sender ][ asset ][ asso ] = amount
     mapping(address => mapping(address => mapping(address => uint256))) Balances;
     //mapping(address => mapping(address => uint256)) Balances;
-    uint256 totalAmount;
+    uint256 public totalAmount;
     address public asso = 0x54C470f15f3f34043BB58d3FBB85685B39E33ed8;
     address yieldMaker;
     address associations;
