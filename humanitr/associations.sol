@@ -92,7 +92,7 @@ contract Associations is Ownable {
         }
         return _donation;
     }
-    function getUserDonation(address _user, address _asso) public view onlyOwner returns(uint256) {
+    function getUserDonation(address _user, address _asso) public view returns(uint256) {
         return UserDonation[_user][_asso];
     }
     function getUserFullDonation(address _user) public view returns(uint256) {
