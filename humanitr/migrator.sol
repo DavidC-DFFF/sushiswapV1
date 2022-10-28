@@ -27,25 +27,7 @@ contract Migrator is Ownable {
     function migrate(/*address _oldDonators, address _newDonators*/) public onlyOwner {
         address _oldDonators = oldDonators;
         address _newDonators = newDonators;
-//
-        /*address[] memory _walletList;
-        address[] memory _assetsList;
-        address[] memory _assosList;*/
-
-/*        //address[] memory _walletList = Donators(_oldDonators).getDonatorsList();
-        for (uint256 i = 0 ; i < Donators(oldDonators).getDonatorsList().length ; i++ ) {
-            //_walletList.push(Donators(oldDonators).getDonatorsList()[i]);
-            _walletList[i] = Donators(oldDonators).getDonatorsList()[i];
-        }
-        //address[] memory _assetsList = Donators(_oldDonators).getAssetsList();
-        for (uint256 i = 0 ; i < Donators(oldDonators).getAssetsList().length ; i++ ) {
-            _assetsList[i] = Donators(oldDonators).getAssetsList()[i];
-        }
-        //address[] memory _assosList = Donators(_oldDonators).getAssosList();
-        for (uint256 i = 0 ; i < Donators(oldDonators).getAssosList().length ; i++ ) {
-            _assosList[i] = Donators(oldDonators).getAssosList()[i];
-        }*/
-//
+        
         for (uint256 i = 0 ; i < Donators(oldDonators).getDonatorsList().length ; i++ ) {
             address _wallet = Donators(oldDonators).getDonatorsList()[i];
             string memory _name = Donators(_oldDonators).getDonatorName(_wallet);
