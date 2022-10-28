@@ -5,20 +5,26 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract Donators is Ownable {
     address public vault;
+    address public migrator;
     address[] public donatorsList;
     struct profile {
         string name;
         mapping(address => mapping(address => uint256)) balancesByAssoByAsset;
         bool exists;
     }
-    mapping(address => profile) DonatorProfile;
+    mapping(address => profile) public DonatorProfile;
 
-    constructor(address _vault) {
+    constructor(address _vault, address _migrator) {
         vault = _vault;
+        migrator = _migrator;
     }
 
     function setVault(address _vault) public onlyOwner {
         vault = _vault;
+    }
+
+    function setMigrator(address _migrator) public onlyOwner {
+        migrator = _migrator;
     }
 
     function setNewDonator(address _donator) public onlyVault {
@@ -29,6 +35,18 @@ contract Donators is Ownable {
         }
         donatorsList.push(_donator);
         DonatorProfile[_donator].exists = true;
+    }
+
+    function updateDonatorMigrate (
+        string memory _name,
+        uint256 _amount,
+        address _asset,
+        address _assoWallet,
+        address _userWallet
+    ) public onlyMigrator {
+        setNewDonator(_userWallet);
+        DonatorProfile[_userWallet].balancesByAssoByAsset[_assoWallet][_asset] += _amount;
+        DonatorProfile[_userWallet].name = _name;
     }
 
     function updateDonator(
@@ -51,7 +69,7 @@ contract Donators is Ownable {
         DonatorProfile[msg.sender].name = _name;
     }
 
-    function getDonatorName(address _wallet)
+/*    function getDonatorName(address _wallet)
         public
         view
         returns (string memory)
@@ -59,7 +77,7 @@ contract Donators is Ownable {
         require(DonatorProfile[_wallet].exists, "Is not donator yet");
         string memory _name = DonatorProfile[_wallet].name;
         return _name;
-    }
+    }*/
 
     function getDonatorAmounts(
         address _wallet,
@@ -76,6 +94,11 @@ contract Donators is Ownable {
 
     modifier onlyVault() {
         require(msg.sender == vault, "Only vault can do that");
+        _;
+    }
+    
+    modifier onlyMigrator() {
+        require(msg.sender == migrator, "Only migrator can do that");
         _;
     }
 }

@@ -42,3 +42,4 @@ coverage/
 *.code-workspace
 
 .deps/*
+old.deps/*
