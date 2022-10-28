@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: dvdch.eth
 pragma solidity ^0.8.10;
 
+// Goerli : 0x989cD1Fe6cC17cf51cAE97389A884b88b46F8eaf
+
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./donators.sol";
 
@@ -62,14 +64,6 @@ contract Migrator is Ownable {
         }
     }
 }
-
-X        string memory _name,
-X        uint256 _amount,
-        address _asset,
-X        address _assoWallet,
-X        address _userWallet
-
-        
         
         
         

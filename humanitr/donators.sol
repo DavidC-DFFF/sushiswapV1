@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: dvdch.eth
 pragma solidity ^0.8.10;
 
+// Donators 1 - Goerli : 0xaa15cac80CDdE360cD8AFc7b48395260fd63D7CA
+// Donators 2 - Goerli : 0xfdd502DF67A16a6420b65ccAa79baBd20E054E80
+
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract Donators is Ownable {
