@@ -63,6 +63,12 @@ contract Migrator is Ownable {
     }
 }
 
+X        string memory _name,
+X        uint256 _amount,
+        address _asset,
+X        address _assoWallet,
+X        address _userWallet
+
         
         
         

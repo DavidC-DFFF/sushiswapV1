@@ -75,7 +75,7 @@ contract Donators is Ownable {
             }
         }
         if ( !_assetInList ) {
-            assetsList.push(_assoWallet);
+            assetsList.push(_asset);
         }
 // update DonatorProfile
     setNewDonator(_userWallet);
