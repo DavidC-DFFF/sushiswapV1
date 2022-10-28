@@ -7,6 +7,8 @@ contract Donators is Ownable {
     address public vault;
     address public migrator;
     address[] public donatorsList;
+    address[] public assosList;
+    address[] public assetsList;
     struct profile {
         string name;
         mapping(address => mapping(address => uint256)) balancesByAssoByAsset;
@@ -44,11 +46,32 @@ contract Donators is Ownable {
         address _assoWallet,
         address _userWallet
     ) public onlyMigrator {
-        setNewDonator(_userWallet);
-        DonatorProfile[_userWallet].balancesByAssoByAsset[_assoWallet][_asset] += _amount;
-        DonatorProfile[_userWallet].name = _name;
+// update _assosList array        
+        bool _assoInList = false;
+        for (uint256 i = 0 ; i < assosList.length ; i++ ) {
+            if ( assosList[i] == _assoWallet ) {
+                _assoInList = true;
+            }
+        }
+        if ( !_assoInList ) {
+            assosList.push(_assoWallet);
+        }
+// update _assetsList array        
+        bool _assetInList = false;
+        for (uint256 i = 0 ; i < assetsList.length ; i++ ) {
+            if ( assetsList[i] == _asset ) {
+                _assetInList = true;
+            }
+        }
+        if ( !_assetInList ) {
+            assetsList.push(_assoWallet);
+        }
+// update DonatorProfile
+    setNewDonator(_userWallet);
+    DonatorProfile[_userWallet].balancesByAssoByAsset[_assoWallet][_asset] += _amount;
+    DonatorProfile[_userWallet].name = _name;
     }
-
+//
     function updateDonator(
         uint256 _amount,
         address _asset,
@@ -56,9 +79,7 @@ contract Donators is Ownable {
         address _userWallet
     ) public onlyVault {
         setNewDonator(_userWallet);
-        DonatorProfile[_userWallet].balancesByAssoByAsset[_assoWallet][
-                _asset
-            ] += _amount;
+        DonatorProfile[_userWallet].balancesByAssoByAsset[_assoWallet][_asset] += _amount;
     }
 
     function updateDonatorName(string memory _name) public {
@@ -68,16 +89,6 @@ contract Donators is Ownable {
         );
         DonatorProfile[msg.sender].name = _name;
     }
-
-/*    function getDonatorName(address _wallet)
-        public
-        view
-        returns (string memory)
-    {
-        require(DonatorProfile[_wallet].exists, "Is not donator yet");
-        string memory _name = DonatorProfile[_wallet].name;
-        return _name;
-    }*/
 
     function getDonatorAmounts(
         address _wallet,

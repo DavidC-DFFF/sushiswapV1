@@ -4,6 +4,15 @@ pragma solidity ^0.8.10;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./donators.sol";
 
+/*
+    struct profile {
+        string name;
+        address[] assets;
+        address[] assos;
+        mapping(address => mapping(address => uint256)) balancesByAssoByAsset;
+        bool exists;
+    }*/
+
 contract MigrateDonators is Ownable {
     struct profile {
         string name;
@@ -12,10 +21,10 @@ contract MigrateDonators is Ownable {
     }
 
     function migrate(address _oldDonators, address _newDonators) public onlyOwner {
-        address[] memory _list = Donators2(_oldDonators).getDonatorsList();
-        for (uint256 i = 0 ; i < _list.length ; i++ ) {
-            Donators2(_newDonators).updateDonatorNameMigrate()
-            Donators2(_newDonators).updateDonator
+        address[] memory _walletList = Donators(_oldDonators).getDonatorsList();
+        for (uint256 i = 0 ; i < _walletList.length ; i++ ) {
+            //Name migrate
+            Donators(_newDonators).updateDonatorName(Donators(_newDonators).DonatorProfile[_walletList[i]].name);
         }
     }
 }
