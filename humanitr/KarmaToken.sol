@@ -10,7 +10,6 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
 
 contract Karma is ERC20, ERC20Burnable, ERC20Snapshot, Ownable, ERC20Permit, ERC20Votes {
     constructor() ERC20("Karma", "KRM") ERC20Permit("Karma") {
-        _mint(msg.sender, 1000000 * 10 ** decimals());
     }
 
     function snapshot() public onlyOwner {
