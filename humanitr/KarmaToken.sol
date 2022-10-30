@@ -10,7 +10,7 @@ pragma solidity ^0.8.4;
     import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
 //Contract
 contract Karma is ERC20, ERC20Burnable, ERC20Snapshot, Ownable, ERC20Permit, ERC20Votes {
-    address vault;
+    address public vault;
 
     function setVault(address _vault) public onlyOwner {
         vault = _vault;

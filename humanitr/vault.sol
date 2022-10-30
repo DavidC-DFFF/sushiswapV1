@@ -73,7 +73,6 @@ contract Vault is
         );
         // transfer
         IERC20(_asset).transfer(msg.sender, _amount);
-
         Balances[msg.sender][_asset][_asso] -= _amount;
         totalAmount -= _amount;
         uint256 _rest = IERC20(_asset).balanceOf(address(this));
@@ -81,7 +80,7 @@ contract Vault is
         //totalDonation += _rest; ▼ replaced by ▼
         //getTotal from asso.sol
         giveToAsso(_asso, _asset, _rest);
-        Karma(karma).mint(msg.sender, _amount);
+        Karma(karma).mint(msg.sender, _rest);
     }
 // withdraw all of asset for asso from msg.sender
     function O3_withdrall(address _asset, address _asso)
