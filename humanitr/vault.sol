@@ -71,14 +71,11 @@ contract Vault is
             _asset,
             _withdrawAmount
         );
-        // transfer
         IERC20(_asset).transfer(msg.sender, _amount);
         Balances[msg.sender][_asset][_asso] -= _amount;
         totalAmount -= _amount;
         uint256 _rest = IERC20(_asset).balanceOf(address(this));
         Associations(associations).updateDonation(_rest, _asso, msg.sender);
-        //totalDonation += _rest; ▼ replaced by ▼
-        //getTotal from asso.sol
         giveToAsso(_asso, _asset, _rest);
         Karma(karma).mint(msg.sender, _rest);
     }
